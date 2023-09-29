@@ -52,6 +52,11 @@
       "name": "Test project",
       "phone": "8 800 555 35 35",
       "id": 6
+    },
+    {
+      "name": "ooo",
+      "phone": "89898989",
+      "id": 7
     }
   ]
 }

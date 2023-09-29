@@ -1,25 +1,38 @@
-function modal() {
-    function showThanksModal(message) {
-        const prevModal = document.querySelector('.modal__dialog');
-        prevModal.classList.add('hide');
+function closeModal(modalSelector) {
+    const modal = document.querySelector(modalSelector);
+    modal.classList.add('hide');
+    modal.classList.remove('show');
+    document.body.style.overflow = ''
+}
 
-        openModal();
-        const thanksModal = document.createElement('div');
-        thanksModal.classList.add('modal__dialog');
-        thanksModal.innerHTML = `
-        <div class ="modal-content">
-        <div class="modal__close" data-close>&times;</div>
-        <div class="modal__title">${message}</div>
-        </div>
-        `
-        document.querySelector('.modal').append(thanksModal);
-        setTimeout(() => {
-            thanksModal.remove();
-            prevModal.classList.add('show');
-            prevModal.classList.remove('hide');
-            closeModal()
-        }, 4000)
-    }
+function openModal(modalSelector) {
+    const modal = document.querySelector(modalSelector);
+    modal.classList.add('show');
+    modal.classList.remove('hide');
+    document.body.style.overflow = 'hidden'
+}
+
+function modal(triggerSelector, modalSelector) {
+    const modalTrigger = document.querySelectorAll(triggerSelector);
+    const modal = document.querySelector(modalSelector);
+
+
+    modalTrigger.forEach(btn => {
+        btn.addEventListener("click",() => openModal(modalSelector))
+    })
+
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal || event.target.getAttribute('data-close') === '') {
+            closeModal(modalSelector)
+        }
+    })
+    document.addEventListener('keydown', (e) => {
+        if (e.code === "Escape" && modal.classList.contains('show')) {
+            closeModal(modalSelector)
+        }
+    })
 
 }
-module.exports = modal
+export default modal
+export {closeModal};
+export {openModal}
